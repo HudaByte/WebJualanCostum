@@ -1,0 +1,35 @@
+{
+  "name": "web-jualan-costum",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "eslint .",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@supabase/ssr": "latest",
+    "@supabase/supabase-js": "latest",
+    "autoprefixer": "^10.4.20",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.454.0",
+    "motion": "^12.23.25",
+    "next": "16.0.3",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-hook-form": "^7.60.0",
+    "tailwind-merge": "^2.5.5",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.9",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "postcss": "^8.5",
+    "tailwindcss": "^4.1.9",
+    "typescript": "^5"
+  }
+}
