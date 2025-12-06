@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { Lock, Eye, EyeOff } from "lucide-react"
 import { verifyAdminPassword, setAdminLoggedIn, isAdminLoggedIn } from "@/lib/store"
 import { AdminDashboard } from "@/components/admin/dashboard"
