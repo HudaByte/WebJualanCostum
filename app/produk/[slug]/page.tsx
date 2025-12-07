@@ -223,10 +223,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       />
       <main className="min-h-screen bg-black text-white selection:bg-blue-500/30">
         <Navbar />
-        <div className="pt-24 pb-16" style={{ minHeight: 'calc(100vh - 80px)' }}>
-          <div className="container mx-auto px-4 md:px-6">
+        <div className="pt-20 sm:pt-24 pb-12 sm:pb-16">
+          <div className="container mx-auto px-4 sm:px-6">
             {/* Breadcrumbs */}
-            <nav className="mb-8 flex items-center gap-2 text-sm text-white/60" style={{ minHeight: '24px' }}>
+            <nav className="mb-6 sm:mb-8 flex items-center gap-2 text-xs sm:text-sm text-white/60">
               <Link href="/" className="hover:text-white transition-colors">
                 Home
               </Link>
@@ -244,51 +244,50 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             {/* Back Button */}
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-8"
-              style={{ minHeight: '32px' }}
+              className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-6 sm:mb-8"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>Kembali ke Beranda</span>
+              <span className="text-sm sm:text-base">Kembali ke Beranda</span>
             </Link>
 
             {/* Product Detail */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
               {/* Product Image */}
               <div className="relative">
-                <div className="relative aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-blue-900/30 to-cyan-900/30 border border-white/10" style={{ minHeight: '400px', aspectRatio: '1 / 1' }}>
+                <div className="relative aspect-square rounded-2xl lg:rounded-3xl overflow-hidden bg-gradient-to-br from-blue-900/30 to-cyan-900/30 border border-white/10">
                   {product.image ? (
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-full object-contain p-8"
+                      className="w-full h-full object-contain p-4 sm:p-6 lg:p-8"
                       loading="eager"
                       width={800}
                       height={800}
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center" style={{ minHeight: '400px' }}>
-                      <div className="w-32 h-32 rounded-2xl bg-white/5 flex items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center min-h-[250px] sm:min-h-[300px] lg:min-h-[400px]">
+                      <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-white/5 flex items-center justify-center">
                         {product.category === "gratis" ? (
-                          <Sparkles className="w-16 h-16 text-green-400/50" />
+                          <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 text-green-400/50" />
                         ) : (
-                          <Tag className="w-16 h-16 text-blue-400/50" />
+                          <Tag className="w-12 h-12 sm:w-16 sm:h-16 text-blue-400/50" />
                         )}
                       </div>
                     </div>
                   )}
 
                   {/* Badge Container - Reserve space to prevent CLS */}
-                  <div className="absolute top-6 right-6" style={{ minHeight: '32px', minWidth: (hasDiscount && discountPercent > 0) || product.category === "gratis" ? '120px' : '0' }}>
+                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4 lg:top-6 lg:right-6">
                     {hasDiscount && discountPercent > 0 && (
-                      <div className="px-4 py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm font-bold rounded-full md:shadow-lg md:shadow-red-500/30 flex items-center gap-2">
-                        <Tag className="w-4 h-4" />
-                        {discountPercent}% OFF
+                      <div className="px-2 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs sm:text-sm font-bold rounded-full md:shadow-lg md:shadow-red-500/30 flex items-center gap-1 sm:gap-2">
+                        <Tag className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="whitespace-nowrap">{discountPercent}% OFF</span>
                       </div>
                     )}
                     {product.category === "gratis" && !hasDiscount && (
-                      <div className="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-sm font-bold rounded-full md:shadow-lg md:shadow-green-500/30 flex items-center gap-2">
-                        <Sparkles className="w-4 h-4" />
-                        GRATIS
+                      <div className="px-2 py-1 sm:px-3 sm:py-1.5 lg:px-4 lg:py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs sm:text-sm font-bold rounded-full md:shadow-lg md:shadow-green-500/30 flex items-center gap-1 sm:gap-2">
+                        <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="whitespace-nowrap">GRATIS</span>
                       </div>
                     )}
                   </div>
@@ -296,35 +295,35 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               </div>
 
               {/* Product Info */}
-              <div className="flex flex-col justify-center" style={{ minHeight: '400px' }}>
-                <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent" style={{ minHeight: '60px' }}>
+              <div className="flex flex-col justify-center">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                   {product.name}
                 </h1>
 
-                <p className="text-white/70 text-lg mb-8 leading-relaxed" style={{ minHeight: '80px' }}>{product.description}</p>
+                <p className="text-white/70 text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed">{product.description}</p>
 
                 {/* Price Section */}
-                <div className="mb-8" style={{ minHeight: '80px' }}>
+                <div className="mb-6 sm:mb-8">
                   {product.category === "gratis" ? (
-                    <div className="text-4xl font-bold text-green-400" style={{ minHeight: '48px' }}>Gratis</div>
+                    <div className="text-3xl sm:text-4xl font-bold text-green-400">Gratis</div>
                   ) : (
-                    <div className="space-y-2" style={{ minHeight: '80px' }}>
+                    <div className="space-y-2">
                       {hasDiscount ? (
                         <>
-                          <div className="flex items-center gap-4" style={{ minHeight: '48px' }}>
-                            <span className="text-4xl font-bold text-blue-400">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <span className="text-3xl sm:text-4xl font-bold text-blue-400">
                               Rp {product.price.toLocaleString("id-ID")}
                             </span>
-                            <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-semibold">
+                            <span className="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-semibold w-fit">
                               Hemat {discountPercent}%
                             </span>
                           </div>
-                          <div className="text-xl text-white/60 line-through" style={{ minHeight: '28px' }}>
+                          <div className="text-lg sm:text-xl text-white/60 line-through">
                             Rp {product.original_price!.toLocaleString("id-ID")}
                           </div>
                         </>
                       ) : (
-                        <span className="text-4xl font-bold text-blue-400" style={{ minHeight: '48px', display: 'block' }}>
+                        <span className="text-3xl sm:text-4xl font-bold text-blue-400 block">
                           Rp {product.price.toLocaleString("id-ID")}
                         </span>
                       )}
@@ -333,22 +332,22 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <a
                     href={product.marketplace_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 py-4 px-8 bg-gradient-to-r from-blue-500 to-cyan-500 md:hover:from-blue-600 md:hover:to-cyan-600 text-white rounded-xl font-semibold text-lg md:transition-all duration-300 md:shadow-lg md:shadow-blue-500/25 md:hover:shadow-blue-500/40 group"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 sm:py-4 px-6 sm:px-8 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white rounded-xl font-semibold text-base sm:text-lg transition-all duration-300 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 group active:scale-95"
                     style={{ touchAction: 'manipulation' }}
                   >
                     <span>{product.button_text || (product.category === "gratis" ? "Ambil Gratis" : "Beli Sekarang")}</span>
-                    <ExternalLink className="w-5 h-5 md:transition-transform md:group-hover:translate-x-1" />
+                    <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
                   </a>
                 </div>
 
                 {/* Additional Info */}
-                <div className="mt-8 pt-8 border-t border-white/10">
-                  <div className="space-y-4 text-sm text-white/60">
+                <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-white/10">
+                  <div className="space-y-3 sm:space-y-4 text-sm text-white/60">
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-white/80">Kategori:</span>
                       <span className="capitalize">{product.category === "gratis" ? "Produk Gratis" : "Produk Premium"}</span>
@@ -360,9 +359,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
             {/* Related Products */}
             {relatedProducts.length > 0 && (
-              <div className="mt-16" style={{ minHeight: '400px' }}>
-                <h2 className="text-3xl font-bold mb-8" style={{ minHeight: '40px' }}>Produk Terkait</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="mt-12 sm:mt-16">
+                <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Produk Terkait</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                   {relatedProducts.map((relatedProduct) => {
                     const relatedSlug = relatedProduct.slug || relatedProduct.id
                     const hasRelatedDiscount =
@@ -375,30 +374,30 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         className="group relative bg-gradient-to-b from-white/[0.08] to-white/[0.02] backdrop-blur-sm md:backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden md:hover:border-blue-500/50 md:transition-all"
                         style={{ touchAction: 'manipulation' }}
                       >
-                        <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-blue-900/30 to-cyan-900/30" style={{ minHeight: '200px', aspectRatio: '4 / 3' }}>
+                        <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-blue-900/30 to-cyan-900/30">
                           {relatedProduct.image ? (
                             <img
                               src={relatedProduct.image}
                               alt={relatedProduct.name}
-                              className="w-full h-full object-contain p-4 md:transition-transform md:duration-700 md:group-hover:scale-105"
+                              className="w-full h-full object-contain p-3 sm:p-4 transition-transform duration-700 group-hover:scale-105"
                               loading="lazy"
                               width={400}
                               height={300}
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center" style={{ minHeight: '200px' }}>
-                              <div className="w-20 h-20 rounded-2xl bg-white/5 flex items-center justify-center">
+                            <div className="w-full h-full flex items-center justify-center min-h-[180px] sm:min-h-[200px]">
+                              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/5 flex items-center justify-center">
                                 {relatedProduct.category === "gratis" ? (
-                                  <Sparkles className="w-10 h-10 text-green-400/50" />
+                                  <Sparkles className="w-8 h-8 sm:w-10 sm:h-10 text-green-400/50" />
                                 ) : (
-                                  <Tag className="w-10 h-10 text-blue-400/50" />
+                                  <Tag className="w-8 h-8 sm:w-10 sm:h-10 text-blue-400/50" />
                                 )}
                               </div>
                             </div>
                           )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent hidden md:block" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent hidden sm:block" />
                           {/* Reserve space for badge to prevent CLS */}
-                          <div className="absolute top-4 right-4" style={{ minHeight: '24px', minWidth: hasRelatedDiscount ? '70px' : '0' }}>
+                          <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
                             {hasRelatedDiscount && (
                               <div className="px-2 py-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs font-bold rounded-full">
                                 DISKON
@@ -406,11 +405,11 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                             )}
                           </div>
                         </div>
-                        <div className="p-6" style={{ minHeight: '100px' }}>
-                          <h3 className="text-lg font-semibold mb-2 text-white md:group-hover:text-blue-400 md:transition-colors line-clamp-1" style={{ minHeight: '28px' }}>
+                        <div className="p-4 sm:p-6">
+                          <h3 className="text-base sm:text-lg font-semibold mb-2 text-white group-hover:text-blue-400 transition-colors line-clamp-1">
                             {relatedProduct.name}
                           </h3>
-                          <div className="text-blue-400 font-semibold" style={{ minHeight: '24px' }}>
+                          <div className="text-blue-400 font-semibold text-sm sm:text-base">
                             {relatedProduct.category === "gratis" ? (
                               "Gratis"
                             ) : (
