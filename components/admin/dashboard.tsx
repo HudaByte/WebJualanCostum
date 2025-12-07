@@ -19,17 +19,20 @@ import {
   MousePointer,
 } from "lucide-react"
 import {
+  getProducts,
   addProduct,
   updateProduct,
   deleteProduct,
+  getSettings,
   updateSettings,
   calculateDiscountPercentage,
   generateSlug,
   type Product,
   type SiteSettings,
 } from "@/lib/store"
-import { useProductsRealtime } from "@/hooks/use-products-realtime"
-import { useSettingsRealtime } from "@/hooks/use-settings-realtime"
+import { createBrowserClient } from "@supabase/ssr"
+
+const supabase = createBrowserClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
 interface AdminDashboardProps {
   onLogout: () => void
@@ -39,14 +42,27 @@ type Tab = "products" | "settings"
 
 export function AdminDashboard({ onLogout }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<Tab>("products")
+  const [products, setProducts] = useState<Product[]>([])
+  const [settings, setSettings] = useState<SiteSettings | null>(null)
   const [isAddingProduct, setIsAddingProduct] = useState(false)
   const [editingProduct, setEditingProduct] = useState<Product | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  // Use real-time hooks untuk auto-update tanpa manual refresh
-  const { products, loading: productsLoading } = useProductsRealtime()
-  const { settings, loading: settingsLoading } = useSettingsRealtime()
+  useEffect(() => {
+    async function loadData() {
+      setLoading(true)
+      const [productsData, settingsData] = await Promise.all([getProducts(), getSettings()])
+      setProducts(productsData)
+      setSettings(settingsData)
+      setLoading(false)
+    }
+    loadData()
+  }, [])
 
-  const loading = productsLoading || settingsLoading
+  const refreshProducts = async () => {
+    const data = await getProducts()
+    setProducts(data)
+  }
 
   if (loading) {
     return (
@@ -101,6 +117,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
         {activeTab === "products" && (
           <ProductsTab
             products={products}
+            onRefresh={refreshProducts}
             isAddingProduct={isAddingProduct}
             setIsAddingProduct={setIsAddingProduct}
             editingProduct={editingProduct}
@@ -108,9 +125,7 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
           />
         )}
 
-        {activeTab === "settings" && settings && (
-          <SettingsTab settings={settings} />
-        )}
+        {activeTab === "settings" && settings && <SettingsTab settings={settings} onUpdate={(s) => setSettings(s)} />}
       </div>
     </div>
   )
@@ -118,12 +133,14 @@ export function AdminDashboard({ onLogout }: AdminDashboardProps) {
 
 function ProductsTab({
   products,
+  onRefresh,
   isAddingProduct,
   setIsAddingProduct,
   editingProduct,
   setEditingProduct,
 }: {
   products: Product[]
+  onRefresh: () => Promise<void>
   isAddingProduct: boolean
   setIsAddingProduct: (v: boolean) => void
   editingProduct: Product | null
@@ -135,7 +152,7 @@ function ProductsTab({
     if (confirm("Yakin ingin menghapus produk ini?")) {
       setDeleting(id)
       await deleteProduct(id)
-      // No need to refresh - real-time hook will update automatically
+      await onRefresh()
       setDeleting(null)
     }
   }
@@ -167,7 +184,7 @@ function ProductsTab({
           onSave={async () => {
             setIsAddingProduct(false)
             setEditingProduct(null)
-            // No need to refresh - real-time hook will update automatically
+            await onRefresh()
           }}
         />
       )}
@@ -601,22 +618,19 @@ function ProductForm({
 
 function SettingsTab({
   settings,
+  onUpdate,
 }: {
   settings: SiteSettings
+  onUpdate: (s: SiteSettings) => void
 }) {
   const [formData, setFormData] = useState(settings)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
 
-  // Update form data when settings change (from real-time hook)
-  useEffect(() => {
-    setFormData(settings)
-  }, [settings])
-
   const handleSave = async () => {
     setSaving(true)
-    await updateSettings(formData)
-    // No need to update state - real-time hook will update automatically
+    const updated = await updateSettings(formData)
+    onUpdate(updated)
     setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
