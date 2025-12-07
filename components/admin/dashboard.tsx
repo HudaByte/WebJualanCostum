@@ -200,7 +200,7 @@ function ProductsTab({
           products.map((product) => (
             <div
               key={product.id}
-              className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10 animate-fadeIn"
+              className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10" // animate-fadeIn - DISABLED
             >
               <div className="w-16 h-16 rounded-lg bg-white/10 overflow-hidden flex-shrink-0">
                 {product.image ? (
@@ -370,9 +370,9 @@ function ProductForm({
   }
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-6 animate-fadeIn">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-6"> {/* animate-fadeIn - DISABLED */}
       <div
-        className="w-full max-w-lg bg-zinc-900 rounded-2xl border border-white/10 overflow-hidden max-h-[90vh] overflow-y-auto animate-scaleIn"
+        className="w-full max-w-lg bg-zinc-900 rounded-2xl border border-white/10 overflow-hidden max-h-[90vh] overflow-y-auto" // animate-scaleIn - DISABLED
       >
         <div className="flex items-center justify-between p-6 border-b border-white/10 sticky top-0 bg-zinc-900 z-10">
           <h3 className="text-xl font-bold">{product ? "Edit Produk" : "Tambah Produk"}</h3>

@@ -288,8 +288,8 @@
     will-change: transform;
   }
   
-  /* Entrance Animations */
-  .reveal-on-scroll {
+  /* Entrance Animations - DISABLED */
+  /* .reveal-on-scroll {
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
@@ -344,7 +344,7 @@
     opacity: 1;
     filter: blur(0);
     transform: translateY(0);
-  }
+  } */
 
   /* Hectic background elements */
   .hectic-blob {
@@ -352,7 +352,8 @@
   }
 }
 
-@keyframes fadeInScale {
+/* Entrance animations keyframes - DISABLED */
+/* @keyframes fadeInScale {
   from { opacity: 0; transform: scale(0.8); }
   to { opacity: 1; transform: scale(1); }
 }
@@ -365,4 +366,4 @@
 @keyframes zoomIn {
   from { opacity: 0; transform: scale(0); }
   to { opacity: 1; transform: scale(1); }
-}
+} */

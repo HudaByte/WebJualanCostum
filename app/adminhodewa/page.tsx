@@ -58,8 +58,9 @@ export default function AdminPage() {
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        // Entrance animation disabled
+        // initial={{ opacity: 0, y: 20 }}
+        // animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md relative z-10"
       >
         <div className="glass rounded-3xl p-8">
@@ -91,7 +92,12 @@ export default function AdminPage() {
             </div>
 
             {error && (
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 text-sm text-center">
+              <motion.p 
+                // Entrance animation disabled
+                // initial={{ opacity: 0 }} 
+                // animate={{ opacity: 1 }} 
+                className="text-red-400 text-sm text-center"
+              >
                 {error}
               </motion.p>
             )}

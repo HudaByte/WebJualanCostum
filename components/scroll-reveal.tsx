@@ -19,28 +19,29 @@ export function ScrollReveal({
   delay = 0,
   duration = 0.8
 }: ScrollRevealProps) {
-  const { ref, isIntersecting } = useIntersection({ threshold: 0.1 })
+  // Entrance animations disabled - just return children without animation
+  // const { ref, isIntersecting } = useIntersection({ threshold: 0.1 })
   
-  const animationClass = {
-    up: "reveal-on-scroll",
-    left: "reveal-left",
-    right: "reveal-right",
-    zoom: "reveal-zoom",
-    blur: "reveal-blur"
-  }[animation]
+  // const animationClass = {
+  //   up: "reveal-on-scroll",
+  //   left: "reveal-left",
+  //   right: "reveal-right",
+  //   zoom: "reveal-zoom",
+  //   blur: "reveal-blur"
+  // }[animation]
 
   return (
     <div
-      ref={ref}
+      // ref={ref}
       className={cn(
-        animationClass,
-        isIntersecting && "is-visible",
+        // animationClass,
+        // isIntersecting && "is-visible",
         className
       )}
-      style={{
-        transitionDelay: `${delay}s`,
-        transitionDuration: `${duration}s`
-      }}
+      // style={{
+      //   transitionDelay: `${delay}s`,
+      //   transitionDuration: `${duration}s`
+      // }}
     >
       {children}
     </div>

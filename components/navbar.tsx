@@ -78,7 +78,7 @@ export function Navbar() {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 px-4 md:px-6 pt-4 md:pt-6 pb-0 spring-500 animate-slideDown",
+          "fixed top-0 left-0 right-0 z-50 px-4 md:px-6 pt-4 md:pt-6 pb-0 spring-500", // animate-slideDown - DISABLED
           isScrolled ? "pt-2 md:pt-4" : "",
         )}
         style={{ minHeight: '80px', height: isScrolled ? '70px' : '80px' }}
@@ -145,18 +145,18 @@ export function Navbar() {
                 "glass bg-white/10 backdrop-blur-xl border border-white/20",
                 "rounded-2xl shadow-2xl shadow-black/20",
                 "overflow-hidden spring-300",
-                "animate-fadeInDown"
+                // "animate-fadeInDown" - DISABLED
               )}
             >
               <div className="flex flex-col p-2">
                 {navLinks.map((link, index) => (
                   <div
                     key={link.name}
-                    className="animate-fadeInUp"
-                    style={{
-                      animationDelay: `${index * 0.05}s`,
-                      animationFillMode: "both",
-                    }}
+                    // className="animate-fadeInUp" - DISABLED
+                    // style={{
+                    //   animationDelay: `${index * 0.05}s`,
+                    //   animationFillMode: "both",
+                    // }}
                   >
                     {link.external ? (
                       <a
