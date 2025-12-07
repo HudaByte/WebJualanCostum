@@ -93,8 +93,7 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: siteUrl,
     },
     verification: {
-      // Add your verification codes here when available
-      // google: "your-google-verification-code",
+      google: "qUZcTLYr3c_NU_4n0_da2QXXTiWmb4WYP5b0WgnXTL4",
       // yandex: "your-yandex-verification-code",
       // bing: "your-bing-verification-code",
     },
@@ -123,6 +122,7 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="google-site-verification" content="qUZcTLYr3c_NU_4n0_da2QXXTiWmb4WYP5b0WgnXTL4" />
       </head>
       <body className={cn("min-h-screen bg-black font-sans antialiased selection:bg-white/20", inter.variable)}>
         {children}
