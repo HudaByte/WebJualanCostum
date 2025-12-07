@@ -1,25 +1,25 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useMemo } from "react"
 import Link from "next/link"
 import { ExternalLink, ShoppingCart, Gift, Sparkles, Zap, Tag } from "lucide-react"
-import { getProducts, type Product, calculateDiscountPercentage } from "@/lib/store"
+import { type Product, calculateDiscountPercentage } from "@/lib/store"
 import { ScrollReveal } from "./scroll-reveal"
+import { useProductsRealtime } from "@/hooks/use-products-realtime"
 
 export function ProductSection() {
-  const [paidProducts, setPaidProducts] = useState<Product[]>([])
-  const [freeProducts, setFreeProducts] = useState<Product[]>([])
-  const [loading, setLoading] = useState(true)
+  // Use real-time hook untuk auto-update products tanpa reload
+  const { products: allProducts, loading } = useProductsRealtime()
 
-  useEffect(() => {
-    async function fetchProducts() {
-      const allProducts = await getProducts()
-      setPaidProducts(allProducts.filter((p) => p.category === "produk"))
-      setFreeProducts(allProducts.filter((p) => p.category === "gratis"))
-      setLoading(false)
-    }
-    fetchProducts()
-  }, [])
+  // Filter products berdasarkan category - akan auto-update saat products berubah
+  const paidProducts = useMemo(
+    () => allProducts.filter((p) => p.category === "produk"),
+    [allProducts]
+  )
+  const freeProducts = useMemo(
+    () => allProducts.filter((p) => p.category === "gratis"),
+    [allProducts]
+  )
 
   const ProductCard = ({ product, index }: { product: Product; index: number }) => {
     const hasDiscount = product.original_price && product.original_price > product.price
