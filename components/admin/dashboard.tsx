@@ -626,11 +626,44 @@ function SettingsTab({
   const [formData, setFormData] = useState(settings)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const previousSettingsRef = useRef<SiteSettings>(settings)
+  const shouldSyncRef = useRef(false)
+
+  // Sync formData with settings prop when:
+  // 1. Settings change from external source (real-time update) AND formData matches previous settings (no local edits)
+  // 2. After successful save (to reflect any server-side transformations)
+  useEffect(() => {
+    // Check if formData has unsaved local changes by comparing with previous settings
+    const formDataMatchesPrevious =
+      formData.siteName === previousSettingsRef.current.siteName &&
+      formData.tagline === previousSettingsRef.current.tagline &&
+      formData.heroTitle === previousSettingsRef.current.heroTitle &&
+      formData.heroSubtitle === previousSettingsRef.current.heroSubtitle &&
+      formData.communityLink === previousSettingsRef.current.communityLink
+
+    // Only sync if:
+    // - formData still matches previous settings (meaning user hasn't edited), OR
+    // - shouldSyncRef is true (set after save)
+    if (formDataMatchesPrevious || shouldSyncRef.current) {
+      setFormData(settings)
+      previousSettingsRef.current = settings
+      shouldSyncRef.current = false
+    }
+  }, [settings, formData])
+
+  // Track when user makes changes
+  const handleFieldChange = (updates: Partial<SiteSettings>) => {
+    setFormData((prev) => ({ ...prev, ...updates }))
+  }
 
   const handleSave = async () => {
     setSaving(true)
     const updated = await updateSettings(formData)
     onUpdate(updated)
+    // Mark that we should sync after save completes
+    shouldSyncRef.current = true
+    // Update ref to current formData so next sync will work correctly
+    previousSettingsRef.current = formData
     setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
@@ -646,7 +679,7 @@ function SettingsTab({
           <input
             type="text"
             value={formData.siteName}
-            onChange={(e) => setFormData({ ...formData, siteName: e.target.value })}
+            onChange={(e) => handleFieldChange({ siteName: e.target.value })}
             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-blue-500/50"
           />
         </div>
@@ -656,7 +689,7 @@ function SettingsTab({
           <input
             type="text"
             value={formData.tagline}
-            onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
+            onChange={(e) => handleFieldChange({ tagline: e.target.value })}
             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-blue-500/50"
           />
         </div>
@@ -666,7 +699,7 @@ function SettingsTab({
           <input
             type="text"
             value={formData.heroTitle}
-            onChange={(e) => setFormData({ ...formData, heroTitle: e.target.value })}
+            onChange={(e) => handleFieldChange({ heroTitle: e.target.value })}
             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-blue-500/50"
           />
         </div>
@@ -675,7 +708,7 @@ function SettingsTab({
           <label className="block text-sm font-medium text-white/60 mb-2">Hero Subtitle</label>
           <textarea
             value={formData.heroSubtitle}
-            onChange={(e) => setFormData({ ...formData, heroSubtitle: e.target.value })}
+            onChange={(e) => handleFieldChange({ heroSubtitle: e.target.value })}
             rows={3}
             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-blue-500/50 resize-none"
           />
@@ -686,7 +719,7 @@ function SettingsTab({
           <input
             type="url"
             value={formData.communityLink}
-            onChange={(e) => setFormData({ ...formData, communityLink: e.target.value })}
+            onChange={(e) => handleFieldChange({ communityLink: e.target.value })}
             className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/40 focus:outline-none focus:border-blue-500/50"
             placeholder="https://t.me/..."
           />

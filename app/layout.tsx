@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "digital products",
       "premium",
       "indonesia",
-      "hudzstore",
+      "hodewastore",
       "jual produk digital",
       "beli produk digital",
       "template premium",
